@@ -1,12 +1,13 @@
-# 基础 Java 运行环境
-FROM openjdk:17-jdk-slim
-
-# 设置工作目录
+# 第一阶段：构建
+FROM maven:3.8-openjdk-17 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# 复制 Maven 构建好的 jar 包到容器里
-# 注意：这里要和你 target 目录里的 jar 包名字完全一致！
-COPY queue-system-parent/queue-system-web/target/queue-system-web-1.0-SNAPSHOT.jar app.jar
-
-# 启动命令
+# 第二阶段：运行
+FROM openjdk:17-slim  # 把这里从 17-jdk-slim 改成 17-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
