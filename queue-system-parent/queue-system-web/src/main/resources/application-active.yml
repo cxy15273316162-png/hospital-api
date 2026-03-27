@@ -1,23 +1,22 @@
 #端口号配置
 server:
-  port: 8089
-#数据库连接配置
+  port: ${PORT:8089}
+
+#数据库连接配置（云端自动适配，不用改密码）
 spring:
   main:
     allow-circular-references: true
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/itmk-base?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-    username: root
-    password: 123456
+    url: jdbc:mysql://${MYSQLHOST}:${MYSQLPORT}/${MYSQLDATABASE}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    username: ${MYSQLUSER}
+    password: ${MYSQLPASSWORD}
 
-
-
-#图片上传
+# 图片上传配置（云端自动路径，不用你本地D盘）
 web:
-  uploadpath: D:/images/queue-system/  #图片上传的路径
-  load-path: file:D://images/queue-system/ #图片访问、加载的路径
+  uploadpath: /app/images/queue-system/
+  load-path: file:/app/images/queue-system/
 
 #mybatis plus配置
 mybatis-plus:
@@ -25,9 +24,9 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      #配置mybatis plus 在更新时只更新非空和非NULL的字段
       update-strategy: not_empty
 
+#日志
 logging:
   pattern:
     console: '%d{yyyy-MM-dd} [%thread] %-5level %logger- %msg%n'
