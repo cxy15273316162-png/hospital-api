@@ -1,0 +1,20 @@
+package com.itmk.web.make_order_visit.entity;
+
+import lombok.Data;
+
+/**
+ * @author java实战基地
+ * @since 2383404558
+ */
+@Data
+public class MakeOrderVisitPageParm {
+    //当前第几页
+    private Long currentPage;
+    //没有查询的条数
+    private Long pageSize;
+    /** 预约人id */
+    private Integer userId;
+    private Long doctorId;
+    private String name;
+    private String timesArea;
+}
