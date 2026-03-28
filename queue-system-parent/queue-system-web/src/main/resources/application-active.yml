@@ -1,6 +1,7 @@
 #端口号配置
 server:
   port: ${PORT:8089}
+  address: 0.0.0.0
 
 #数据库连接配置（云端自动适配，不用改密码）
 spring:
